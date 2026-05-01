@@ -1,12 +1,34 @@
-// Animate skill bars on scroll
-const fills = document.querySelectorAll(".fill");
+// SMOOTH SCROLL
+const lenis = new Lenis({
+  duration: 1.2,
+  smooth: true,
+});
 
-window.addEventListener("scroll", () => {
-  fills.forEach(fill => {
-    const rect = fill.getBoundingClientRect();
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
-    if (rect.top < window.innerHeight) {
-      fill.style.width = fill.dataset.width;
+
+// SCROLL ANIMATION
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
     }
+  });
+});
+
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+
+// PARALLAX EFFECT
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+
+  document.querySelectorAll(".parallax").forEach(el => {
+    const speed = el.getAttribute("data-speed");
+    el.style.transform = `translateY(${scrollY * speed}px)`;
   });
 });
