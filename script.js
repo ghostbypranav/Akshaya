@@ -1,13 +1,12 @@
-//thinking about it , will add it later...//
+// Animate skill bars on scroll
+const fills = document.querySelectorAll(".fill");
 
-const faders = document.querySelectorAll('.fade-in');
+window.addEventListener("scroll", () => {
+  fills.forEach(fill => {
+    const rect = fill.getBoundingClientRect();
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-        }
-    });
+    if (rect.top < window.innerHeight) {
+      fill.style.width = fill.dataset.width;
+    }
+  });
 });
-
-faders.forEach(el => observer.observe(el));
